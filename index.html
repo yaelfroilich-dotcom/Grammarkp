@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ציידות השדים של ה-K-Pop 🎤 כוכבות הדקדוק!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Rubik', sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(circle at 50% 15%, #4c1d95 0%, #1e1b4b 45%, #090d16 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #f8fafc;
+        }
+
+        /* אורות ניאון של במת K-Pop */
+        .stage-grid {
+            background-image: 
+                linear-gradient(to right, rgba(236, 72, 153, 0.14) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(56, 189, 248, 0.14) 1px, transparent 1px);
+            background-size: 36px 36px;
+        }
+
+        .neon-card {
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(12px);
+            border: 3px solid #ec4899;
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.35), inset 0 0 15px rgba(168, 85, 247, 0.2);
+        }
+
+        .neon-border-cyan {
+            border: 3px solid #22d3ee;
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+        }
+
+        /* אנימציית ריחוף לשד הבלבול ולציידת */
+        @keyframes floatIdle {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        .float-anim {
+            animation: floatIdle 2.2s ease-in-out infinite;
+        }
+
+        /* אנימציית טיהור שד */
+        @keyframes demonPurify {
+            0% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+            50% { transform: scale(1.3) rotate(15deg); filter: brightness(3) hue-rotate(90deg); }
+            100% { transform: scale(0.8) rotate(0deg); opacity: 0.9; }
+        }
+        .purify-hit {
+            animation: demonPurify 0.55s ease-out forwards;
+        }
+
+        /* קרן לייזר מוזיקלית */
+        #magic-beam {
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .beam-shoot {
+            opacity: 1 !important;
+            animation: beamPulse 0.45s ease-out forwards;
+        }
+        @keyframes beamPulse {
+            0% { transform: scale(0.3) translateY(60px); opacity: 1; }
+            60% { transform: scale(1.25) translateY(-110px); opacity: 1; }
+            100% { transform: scale(1.6) translateY(-145px); opacity: 0; }
+        }
+
+        /* כפתורי תלת-מימד זוהרים */
+        .btn-kpop {
+            transition: all 0.15s ease;
+            box-shadow: 0 6px 0 #831843, 0 0 18px rgba(236, 72, 153, 0.5);
+        }
+        .btn-kpop:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #831843, 0 0 10px rgba(236, 72, 153, 0.4);
+        }
+
+        .btn-portal {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+            box-shadow: 0 6px 0 rgba(15, 23, 42, 0.7), 0 0 20px rgba(34, 211, 238, 0.45);
+        }
+        .btn-portal:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 0 rgba(15, 23, 42, 0.7), 0 0 28px rgba(236, 72, 153, 0.75);
+        }
+        .btn-portal:active {
+            transform: scale(0.95);
+        }
+
+        /* תיבת חרוז K-Pop */
+        .rhyme-kpop-box {
+            background: linear-gradient(135deg, #3b0764 0%, #701a75 50%, #831843 100%);
+            border: 3px dashed #f472b6;
+            box-shadow: 0 0 20px rgba(244, 114, 182, 0.3);
+        }
+
+        @keyframes popBanner {
+            0% { transform: scale(0.3) rotate(-6deg); opacity: 0; }
+            65% { transform: scale(1.08) rotate(2deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .pop-anim {
+            animation: popBanner 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-between min-h-screen stage-grid relative">
+
+    <!-- קנבס קונפטי ונצנצים -->
+    <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <!-- סרגל עליון - לוח בקרה של הבמה -->
+    <header class="w-full bg-slate-950/90 border-b-4 border-pink-500 px-3 py-2.5 shadow-2xl z-30">
+        <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            <!-- לוגו ושם המשחק -->
+            <div class="flex items-center gap-2.5 cursor-pointer" onclick="showMainMenu()">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-pink-500 via-purple-500 to-cyan-400 flex items-center justify-center text-2xl shadow-lg animate-pulse">
+                    🎤
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-fuchsia-300 to-cyan-300 leading-none">
+                        ציידות השדים של ה-K-Pop
+                    </h1>
+                    <p class="text-xs text-cyan-300 font-semibold mt-0.5">כוכבות הדקדוק וההתאמה הלשונית ✨</p>
+                </div>
+            </div>
+
+            <!-- מד אנרגיית הבמה וניקוד -->
+            <div class="flex items-center gap-2 md:gap-4 bg-slate-900/90 px-3 py-1.5 rounded-2xl border-2 border-purple-500/60 shadow-inner">
+                <div class="text-center px-2">
+                    <span class="text-[11px] text-pink-300 block">שדים שטוהרו ✨</span>
+                    <span id="score-display" class="text-xl md:text-2xl font-black text-cyan-300">0</span>
+                </div>
+                <div class="h-7 w-0.5 bg-purple-700"></div>
+                <div class="text-center px-2">
+                    <span class="text-[11px] text-pink-300 block">קומבו קצב 🔥</span>
+                    <span id="streak-display" class="text-xl md:text-2xl font-black text-pink-400">0</span>
+                </div>
+                <div class="h-7 w-0.5 bg-purple-700"></div>
+                <div class="text-center px-2">
+                    <span class="text-[11px] text-pink-300 block">כוכבי איידול 🌟</span>
+                    <span id="medals-display" class="text-xl md:text-2xl font-black text-yellow-300">0/4</span>
+                </div>
+            </div>
+
+            <!-- כפתורי מוזיקה, הקראה ותפריט -->
+            <div class="flex items-center gap-2">
+                <button id="music-btn" onclick="toggleMusic()" class="btn-kpop bg-purple-600 hover:bg-purple-500 text-white px-3 py-2 rounded-xl text-xs md:text-sm font-bold flex items-center gap-1" title="ביט K-Pop">
+                    <span id="music-icon">🎵</span>
+                    <span class="hidden sm:inline">ביט K-Pop</span>
+                </button>
+                <button id="sfx-btn" onclick="toggleSfx()" class="btn-kpop bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-2 rounded-xl text-xs md:text-sm font-bold flex items-center gap-1" title="קול והקראה">
+                    <span id="sfx-icon">🔊</span>
+                    <span class="hidden sm:inline">קול פעיל</span>
+                </button>
+                <button onclick="showMainMenu()" class="btn-kpop bg-pink-500 hover:bg-pink-400 text-white px-3 py-2 rounded-xl text-xs md:text-sm font-black">
+                    🏠 לבמה
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- אזור מרכזי של המשחק -->
+    <main class="flex-1 flex flex-col items-center justify-center p-3 md:p-6 relative z-20">
+
+        <!-- ==================== מסך 1: תפריט ראשי - בחירת משימת K-Pop ==================== -->
+        <section id="screen-menu" class="w-full max-w-4xl neon-card rounded-3xl p-5 md:p-8 text-center">
+            <div class="inline-flex items-center gap-2 bg-pink-500/20 text-pink-300 px-4 py-1 rounded-full font-bold text-sm mb-2 border border-pink-400/50">
+                <span>⚡</span>
+                <span>סיבוב ההופעות העולמי: דקדוק והתאמה לשונית</span>
+                <span>⚡</span>
+            </div>
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-2 drop-shadow">שדי הבלבול פלשו לבמה!</h2>
+            <p class="text-sm md:text-lg text-purple-200 max-w-2xl mx-auto mb-6">
+                שדי השגיאות מנסים לזייף לנו את השירים! בחרו משימה, היכנסו לחדר החזרות ללמוד את <strong>חרוז הקצב</strong>, ושגרו קרני הרמוניה כדי לטהר את הבמה!
+            </p>
+
+            <!-- כרטיסיות 4 הכללים מסעיף 2 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-right">
+                
+                <!-- שלב 1: שם המספר -->
+                <div onclick="startStage(0)" class="cursor-pointer group bg-gradient-to-br from-purple-900/90 to-pink-900/80 hover:from-purple-800 hover:to-pink-800 p-4 rounded-2xl border-2 border-pink-400/70 shadow-lg transition transform hover:-translate-y-1 flex items-center justify-between">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-pink-500 to-rose-400 text-white flex items-center justify-center text-2xl font-black shadow-lg group-hover:scale-110 transition">
+                            123
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold bg-pink-500/30 text-pink-200 px-2 py-0.5 rounded-full border border-pink-400/40">שיר 1</span>
+                                <span id="badge-stage-0" class="hidden text-xs bg-yellow-400 text-slate-950 font-black px-2 py-0.5 rounded-full">🌟 הושלם!</span>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-black text-white mt-0.5">שם המספר (זכר ונקבה)</h3>
+                            <p class="text-xs md:text-sm text-pink-200">שלושה בנים עם ה', שלוש בנות בלי ה'!</p>
+                        </div>
+                    </div>
+                    <span class="text-2xl text-pink-400 group-hover:translate-x-[-4px] transition">⬅️</span>
+                </div>
+
+                <!-- שלב 2: התאמה במין ובמספר -->
+                <div onclick="startStage(1)" class="cursor-pointer group bg-gradient-to-br from-indigo-900/90 to-cyan-900/80 hover:from-indigo-800 hover:to-cyan-800 p-4 rounded-2xl border-2 border-cyan-400/70 shadow-lg transition transform hover:-translate-y-1 flex items-center justify-between">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-500 text-white flex items-center justify-center text-2xl font-black shadow-lg group-hover:scale-110 transition">
+                            👖👓
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold bg-cyan-500/30 text-cyan-200 px-2 py-0.5 rounded-full border border-cyan-400/40">שיר 2</span>
+                                <span id="badge-stage-1" class="hidden text-xs bg-yellow-400 text-slate-950 font-black px-2 py-0.5 rounded-full">🌟 הושלם!</span>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-black text-white mt-0.5">התאמה במין ובמספר</h3>
+                            <p class="text-xs md:text-sm text-cyan-200">מכנסיים יפים, צומת מסוכן, משקפיים חדשים</p>
+                        </div>
+                    </div>
+                    <span class="text-2xl text-cyan-400 group-hover:translate-x-[-4px] transition">⬅️</span>
+                </div>
+
+                <!-- שלב 3: יידוע צירוף סמיכות -->
+                <div onclick="startStage(2)" class="cursor-pointer group bg-gradient-to-br from-fuchsia-900/90 to-purple-900/80 hover:from-fuchsia-800 hover:to-purple-800 p-4 rounded-2xl border-2 border-fuchsia-400/70 shadow-lg transition transform hover:-translate-y-1 flex items-center justify-between">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-fuchsia-500 to-purple-500 text-white flex items-center justify-center text-2xl font-black shadow-lg group-hover:scale-110 transition">
+                            ה'
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold bg-fuchsia-500/30 text-fuchsia-200 px-2 py-0.5 rounded-full border border-fuchsia-400/40">שיר 3</span>
+                                <span id="badge-stage-2" class="hidden text-xs bg-yellow-400 text-slate-950 font-black px-2 py-0.5 rounded-full">🌟 הושלם!</span>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-black text-white mt-0.5">יידוע צירוף סמיכות</h3>
+                            <p class="text-xs md:text-sm text-fuchsia-200">בית הספר, עורך הדין (ה' רק במילה השנייה!)</p>
+                        </div>
+                    </div>
+                    <span class="text-2xl text-fuchsia-400 group-hover:translate-x-[-4px] transition">⬅️</span>
+                </div>
+
+                <!-- שלב 4: מילות יחס מוטות -->
+                <div onclick="startStage(3)" class="cursor-pointer group bg-gradient-to-br from-emerald-900/90 to-teal-900/80 hover:from-emerald-800 hover:to-teal-800 p-4 rounded-2xl border-2 border-emerald-400/70 shadow-lg transition transform hover:-translate-y-1 flex items-center justify-between">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white flex items-center justify-center text-2xl font-black shadow-lg group-hover:scale-110 transition">
+                            💜💬
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold bg-emerald-500/30 text-emerald-200 px-2 py-0.5 rounded-full border border-emerald-400/40">שיר 4</span>
+                                <span id="badge-stage-3" class="hidden text-xs bg-yellow-400 text-slate-950 font-black px-2 py-0.5 rounded-full">🌟 הושלם!</span>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-black text-white mt-0.5">מילות יחס והתאמת פועל</h3>
+                            <p class="text-xs md:text-sm text-emerald-200">כואבת לי הבטן, באתי אליך (ולא אצלך!)</p>
+                        </div>
+                    </div>
+                    <span class="text-2xl text-emerald-400 group-hover:translate-x-[-4px] transition">⬅️</span>
+                </div>
+            </div>
+
+            <!-- כפתור המופע המרכזי - קרב הבוס הגדול -->
+            <button onclick="startStage(4)" class="btn-kpop w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-pink-500 via-fuchsia-500 to-cyan-400 hover:from-pink-400 hover:to-cyan-300 text-slate-950 font-black text-xl md:text-2xl rounded-2xl flex items-center justify-center gap-3 mx-auto">
+                <span>👑</span>
+                <span>המופע המרכזי: קרב הבוס הגדול! (כל החוקים)</span>
+                <span>🎤</span>
+            </button>
+        </section>
+
+        <!-- ==================== מסך 2: תדריך המנטורית בחדר החזרות (חרוז + דוגמאות + הקראה) ==================== -->
+        <section id="screen-briefing" class="hidden w-full max-w-3xl neon-card rounded-3xl p-5 md:p-8 relative">
+            <!-- כותרת תדריך ומנטורית -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b-2 border-pink-500/30 pb-4 mb-5">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-16 h-16 bg-gradient-to-tr from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center text-4xl border-2 border-cyan-300 shadow-lg">
+                        👩‍🎤
+                    </div>
+                    <div class="text-right">
+                        <span id="briefing-stage-tag" class="text-xs font-black uppercase bg-pink-500 text-white px-3 py-0.5 rounded-full">חדר החזרות – שיר 1</span>
+                        <h2 id="briefing-title" class="text-2xl md:text-3xl font-black text-white mt-1">שם המספר</h2>
+                    </div>
+                </div>
+                <button onclick="readCurrentBriefing()" class="btn-kpop bg-cyan-400 hover:bg-cyan-300 text-slate-950 px-4 py-2.5 rounded-2xl font-black text-sm md:text-base flex items-center gap-2 shrink-0">
+                    <span>🔊</span>
+                    <span>הקראי לי את הכלל!</span>
+                </button>
+            </div>
+
+            <!-- חרוז הקצב של להקת ה-K-Pop -->
+            <div class="rhyme-kpop-box rounded-2xl p-4 md:p-5 mb-5 text-center relative">
+                <span class="text-xs font-black bg-cyan-400 text-slate-950 px-3 py-0.5 rounded-full inline-block mb-2">🎵 חרוז הקצב של ציידות השדים 🎵</span>
+                <p id="briefing-rhyme" class="text-xl md:text-2xl font-black text-pink-200 leading-relaxed"></p>
+            </div>
+
+            <!-- הסבר קצר וקולע -->
+            <p id="briefing-explanation" class="text-base md:text-lg text-purple-100 font-semibold mb-5 text-center leading-relaxed"></p>
+
+            <!-- דוגמאות: הרמוניה נכונה מול שד הבלבול -->
+            <div class="mb-6">
+                <h3 class="text-sm font-black text-cyan-300 uppercase tracking-wider mb-3 text-center">✨ לוח ההרמוניה בחדר החזרות:</h3>
+                <div id="briefing-examples" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <!-- מוזרק דינמית -->
+                </div>
+            </div>
+
+            <!-- כפתור עלייה לבמה -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button onclick="launchStageBattle()" class="btn-kpop w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-black text-xl md:text-2xl rounded-2xl flex items-center justify-center gap-3">
+                    <span>עולים לבמה לטהר שדים!</span>
+                    <span class="text-3xl">🎤⚡</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================== מסך 3: זירת המופע והקרב המוזיקלי ==================== -->
+        <section id="screen-game" class="hidden w-full max-w-4xl flex flex-col items-center">
+            
+            <!-- סרגל התקדמות במופע + כפתור תזכורת לחרוז -->
+            <div class="w-full flex flex-wrap items-center justify-between gap-2 bg-slate-950/95 text-white px-4 py-2.5 rounded-t-3xl border-x-4 border-t-4 border-pink-500">
+                <div class="flex items-center gap-2">
+                    <span id="game-stage-title" class="font-black text-pink-400 text-sm md:text-base">שיר 1</span>
+                    <span class="text-purple-500">|</span>
+                    <span id="question-counter" class="text-xs md:text-sm font-bold text-cyan-300">קרב 1 מתוך 5</span>
+                </div>
+
+                <!-- נורות לייטסטיק (נקודות התקדמות) -->
+                <div id="lightstick-dots" class="flex items-center gap-1.5">
+                    <!-- מוזרק דינמית -->
+                </div>
+
+                <button onclick="toggleRuleReminder()" class="bg-cyan-400 hover:bg-cyan-300 text-slate-950 px-3 py-1 rounded-xl text-xs font-black flex items-center gap-1 transition">
+                    <span>🎵</span>
+                    <span>חרוז הקצב</span>
+                </button>
+            </div>
+
+            <!-- חלונית תזכורת חרוז קופצת -->
+            <div id="rule-reminder-popup" class="hidden w-full bg-purple-950 border-x-4 border-b-2 border-cyan-400 px-4 py-2.5 text-center">
+                <p id="reminder-rhyme-text" class="text-sm md:text-base font-black text-cyan-200"></p>
+            </div>
+
+            <!-- זירת הבמה של ציידות השדים -->
+            <div class="w-full neon-card rounded-b-3xl border-t-0 p-3 md:p-6 flex flex-col items-center relative overflow-hidden">
+                
+                <!-- זרקורי במה עליונים -->
+                <div class="w-full max-w-2xl bg-gradient-to-b from-purple-950/90 to-slate-900/90 neon-border-cyan rounded-2xl p-4 md:p-5 relative min-h-[210px] flex flex-col justify-between items-center shadow-2xl">
+                    
+                    <!-- שד הבלבול על הבמה -->
+                    <div class="flex flex-col items-center mb-3 z-10">
+                        <span id="demon-name-tag" class="text-xs font-black bg-rose-600/90 text-white px-3 py-0.5 rounded-full border border-rose-300 mb-1 shadow">
+                            👾 שד הבלבול הופיע!
+                        </span>
+                        <div id="demon-avatar" class="float-anim text-5xl md:text-6xl select-none filter drop-shadow-[0_0_15px_rgba(236,72,153,0.8)]">
+                            👾🎶
+                        </div>
+                    </div>
+
+                    <!-- שערי הקצב (כפתורי התשובות לבחירה) -->
+                    <div id="targets-container" class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 z-20 my-auto">
+                        <!-- כפתורי התשובות מוזרקים כאן -->
+                    </div>
+                </div>
+
+                <!-- כרטיס המשפט להשלמה בשיר -->
+                <div class="w-full max-w-2xl bg-slate-900/95 rounded-2xl p-4 md:p-5 mt-4 shadow-xl border-2 border-pink-400 text-center relative z-20">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold text-pink-200 bg-pink-500/30 px-2.5 py-0.5 rounded-full border border-pink-400/40">
+                            🎯 בחרו את ההתאמה הנכונה כדי לשגר קרן קצב!
+                        </span>
+                        <button onclick="speakCurrentQuestion()" class="text-xs md:text-sm bg-cyan-500/20 hover:bg-cyan-500/40 text-cyan-200 border border-cyan-400/50 font-bold px-3 py-1 rounded-full flex items-center gap-1 transition">
+                            <span>🔊</span>
+                            <span>הקרא משפט</span>
+                        </button>
+                    </div>
+                    <p id="question-sentence" class="text-xl md:text-3xl font-black text-white my-2 leading-relaxed"></p>
+                    <p id="question-hint-sub" class="text-xs md:text-sm text-cyan-300 font-semibold"></p>
+                </div>
+
+                <!-- עמדת ציידת השדים והלייטסטיק הקסום -->
+                <div class="mt-4 mb-1 flex flex-col items-center justify-center relative h-20 w-full">
+                    <!-- קרן הקסם שמשתגרת -->
+                    <div id="magic-beam" class="text-4xl md:text-5xl absolute bottom-8 z-30">
+                        💖✨🎵⚡
+                    </div>
+                    <!-- ציידת השדים עם המיקרופון -->
+                    <div id="hunter-heroine" class="text-5xl md:text-6xl select-none cursor-pointer transition transform hover:scale-110" title="ציידת השדים של ה-K-Pop">
+                        👩‍🎤🪄
+                    </div>
+                </div>
+
+                <!-- באנר משוב על תור (טיהור שד או חסימה + הסבר) -->
+                <div id="feedback-overlay" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-md z-30 flex items-center justify-center p-4">
+                    <div class="bg-slate-900 rounded-3xl p-5 md:p-7 max-w-lg w-full text-center border-4 border-pink-500 shadow-2xl pop-anim">
+                        <div id="feedback-emoji" class="text-6xl mb-2">🌟🎤✨</div>
+                        <h3 id="feedback-title" class="text-3xl md:text-4xl font-black text-cyan-300 mb-2">הרמוניה מושלמת!</h3>
+                        <p id="feedback-explanation" class="text-base md:text-lg text-purple-100 font-bold mb-4 leading-relaxed bg-slate-800/90 p-3.5 rounded-2xl border border-purple-500/40"></p>
+                        <button id="feedback-next-btn" onclick="nextBattleStep()" class="btn-kpop w-full py-3.5 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-black text-xl rounded-2xl">
+                            לקצב הבא! ⬅️
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== מסך 4: חגיגת סיום שיר / כתר האיידול ==================== -->
+        <section id="screen-celebration" class="hidden w-full max-w-2xl neon-card rounded-3xl p-6 md:p-8 text-center">
+            <div id="celeb-trophy" class="text-7xl md:text-8xl mb-3 animate-bounce">👑🎤</div>
+            <span class="bg-gradient-to-r from-pink-500 to-cyan-400 text-slate-950 font-black px-4 py-1 rounded-full text-sm">
+                ציידות השדים כבשו את המצעדים!
+            </span>
+            <h2 id="celeb-title" class="text-3xl md:text-4xl font-black text-white mt-3 mb-2">הבמה טוהרה בהצלחה!</h2>
+            <p id="celeb-subtitle" class="text-base md:text-lg text-cyan-200 font-semibold mb-5"></p>
+
+            <!-- סיכום חרוז הקצב למזכרת -->
+            <div class="rhyme-kpop-box rounded-2xl p-4 mb-6">
+                <span class="text-xs font-black text-cyan-300 block mb-1">🎵 שומרים על הקצב גם בכיתה:</span>
+                <p id="celeb-rhyme" class="text-lg md:text-xl font-black text-white"></p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <button id="celeb-next-stage-btn" onclick="goToNextStage()" class="btn-kpop px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-black text-xl rounded-2xl flex items-center justify-center gap-2">
+                    <span>לשיר הבא במופע!</span>
+                    <span>🎤</span>
+                </button>
+                <button onclick="showMainMenu()" class="px-6 py-4 bg-slate-800 hover:bg-slate-700 text-purple-200 font-bold text-lg rounded-2xl border border-purple-500/40 transition">
+                    חזרה לבמה הראשית 🏠
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- כותרת תחתונה -->
+    <footer class="text-center py-2 text-xs text-purple-300/80 z-20">
+        ציידות השדים של ה-K-Pop • לומדים דקדוק והתאמה לשונית בקצב, בחרוזים ובכיף 🎤✨
+    </footer>
+
+    <!-- ==================== לוגיקת המשחק, הסינתיסייזר והתוכן הלשוני ==================== -->
+    <script>
+        /* =========================================================================
+           1. מנוע סאונד K-Pop (Web Audio API) + הקראה קולית בעברית (Web Speech API)
+           ========================================================================= */
+        let audioCtx = null;
+        let sfxEnabled = true;
+        let musicPlaying = false;
+        let musicInterval = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // אפקט כניסה לבמה / פתיחת שלב
+        function playStageChime() {
+            if (!sfxEnabled) return;
+            initAudio();
+            const chords = [523.25, 659.25, 783.99, 987.77]; // Cmaj7 נוצץ
+            chords.forEach((freq, i) => {
+                const now = audioCtx.currentTime + i * 0.06;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now);
+                gain.gain.setValueAtTime(0.16, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.35);
+            });
+        }
+
+        // צליל שיגור קרן לייזר מוזיקלית
+        function playLaserBeamSound() {
+            if (!sfxEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(320, now);
+            osc.frequency.exponentialRampToValueAtTime(1180, now + 0.22);
+
+            gain.gain.setValueAtTime(0.22, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.24);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.24);
+        }
+
+        // צליל טיהור שד והרמוניית K-Pop מנצחת
+        function playHarmonyFanfare() {
+            if (!sfxEnabled) return;
+            initAudio();
+            const notes = [587.33, 739.99, 880.00, 1174.66]; // אקורד D Major זוהר
+            notes.forEach((freq, idx) => {
+                const now = audioCtx.currentTime + idx * 0.09;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            });
+        }
+
+        // צליל חסימת מגן עדין (במקרה של טעות)
+        function playShieldBlockSound() {
+            if (!sfxEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(260, now);
+            osc.frequency.linearRampToValueAtTime(150, now + 0.28);
+            gain.gain.setValueAtTime(0.22, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.3);
+        }
+
+        // לופ ביט סינת'-פופ K-Pop קצבי
+        function toggleMusic() {
+            initAudio();
+            musicPlaying = !musicPlaying;
+            const btn = document.getElementById('music-btn');
+            const icon = document.getElementById('music-icon');
+
+            if (musicPlaying) {
+                btn.classList.replace('bg-purple-600', 'bg-pink-500');
+                icon.textContent = '🎶';
+                let step = 0;
+                const kpopRiff = [440.00, 523.25, 659.25, 587.33, 440.00, 659.25, 587.33, 523.25];
+                musicInterval = setInterval(() => {
+                    if (!musicPlaying || !sfxEnabled) return;
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = step % 2 === 0 ? 'square' : 'triangle';
+                    osc.frequency.setValueAtTime(kpopRiff[step % kpopRiff.length], now);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.19);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.19);
+                    step++;
+                }, 220);
+            } else {
+                btn.classList.replace('bg-pink-500', 'bg-purple-600');
+                icon.textContent = '🎵';
+                clearInterval(musicInterval);
+            }
+        }
+
+        function toggleSfx() {
+            sfxEnabled = !sfxEnabled;
+            const icon = document.getElementById('sfx-icon');
+            const btn = document.getElementById('sfx-btn');
+            if (sfxEnabled) {
+                icon.textContent = '🔊';
+                btn.classList.replace('bg-slate-700', 'bg-cyan-600');
+            } else {
+                icon.textContent = '🔇';
+                btn.classList.replace('bg-cyan-600', 'bg-slate-700');
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            }
+        }
+
+        // הקראה קולית בעברית (Web Speech API)
+        function speakHebrew(text) {
+            if (!sfxEnabled || !('speechSynthesis' in window)) return;
+            try {
+                window.speechSynthesis.cancel();
+                const cleanText = text.replace(/___/g, 'השלימו');
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                utterance.lang = 'he-IL';
+                utterance.rate = 0.95;
+                utterance.pitch = 1.08;
+                window.speechSynthesis.speak(utterance);
+            } catch (e) {
+                console.warn('Speech synthesis error:', e);
+            }
+        }
+
+        /* =========================================================================
+           2. מאגר התוכן הלשוני: סעיף 2 - דקדוק והתאמה לשונית (4 שלבים + גמר)
+           ========================================================================= */
+        const DEMON_AVATARS = ["👾🎶", "👹🎸", "👻🥁", "👿🎷", "🦇🎹"];
+
+        const STAGES_DATA = [
+            {
+                id: 0,
+                title: "שם המספר (זכר ונקבה)",
+                rhyme: "במספרים יש כלל מפתיע: לבנים ה' תופיע! (שלושה בנים), ולבנות בלי ה' נשיר – שלוש כוכבות מאירות את העיר!",
+                explanation: "בעברית שם המספר עובד הפוך ממה שנשמע: כשסופרים זכר מוסיפים סיומת ה' (שלושה, ארבעה, חמישה), וכשסופרים נקבה אומרים בלי ה' (שלוש, ארבע, חמש). כדי לא להתבלבל, בודקים את המילה ביחיד!",
+                examples: [
+                    { right: "שלושה ילדים רוקדים", wrong: "שלוש ילדים רוקדים", note: "ילד אחד (זכר) <- סופרים עם ה': שלושה!" },
+                    { right: "חמש בנות שרות בלהקה", wrong: "חמישה בנות שרות", note: "בת אחת (נקבה) <- סופרים בלי ה': חמש!" },
+                    { right: "ארבעה מיקרופונים נוצצים", wrong: "ארבע מיקרופונים", note: "מיקרופון הוא זכר <- ארבעה!" },
+                    { right: "שבע גיטרות חשמליות", wrong: "שבעה גיטרות", note: "גיטרה היא נקבה <- שבע!" }
+                ],
+                questions: [
+                    {
+                        sentence: "על במת ה-K-Pop מופיעות ___ זמרות מוכשרות.",
+                        options: ["ארבע", "ארבעה"],
+                        correct: 0,
+                        hint: "זמרת היא נקבה (בלי ה' במספר!)",
+                        explain: "הרמוניה מושלמת! 'זמרת' היא נקבה, ולכן סופרים בלי ה': ארבע זמרות!"
+                    },
+                    {
+                        sentence: "במופע השתמשנו ב-___ מיקרופונים מוזהבים.",
+                        options: ["שלוש", "שלושה"],
+                        correct: 1,
+                        hint: "מיקרופון אחד (זכר) <- מוסיפים ה'!",
+                        explain: "קרן לייזר מדויקת! 'מיקרופון' הוא זכר, ולכן אומרים: שלושה מיקרופונים."
+                    },
+                    {
+                        sentence: "הציידות טיהרו ___ שדים מבלבלים בדקה אחת!",
+                        options: ["חמישה", "חמש"],
+                        correct: 0,
+                        hint: "שד אחד (זכר) <- עם ה'!",
+                        explain: "בום! 'שד' הוא זכר, ולכן סופרים עם ה': חמישה שדים!"
+                    },
+                    {
+                        sentence: "למדנו ___ תנועות ריקוד חדשות לפזמון.",
+                        options: ["שש", "שישה"],
+                        correct: 0,
+                        hint: "תנועה אחת (נקבה) <- בלי ה'!",
+                        explain: "כוכבות! 'תנועה' היא נקבה, ולכן אומרים: שש תנועות."
+                    },
+                    {
+                        sentence: "באולם המופעים דלקו ___ זרקורים צבעוניים.",
+                        options: ["שבע", "שבעה"],
+                        correct: 1,
+                        hint: "זרקור אחד (זכר) <- מוסיפים ה'!",
+                        explain: "טיהור מושלם! 'זרקור' הוא זכר, ולכן אומרים: שבעה זרקורים."
+                    }
+                ]
+            },
+            {
+                id: 1,
+                title: "התאמה במין ובמספר",
+                rhyme: "מכנסיים יפים ומשקפיים חדשים, וצומת הוא זכר – מסוכן בכבישים! שם העצם והתואר תמיד מתאימים!",
+                explanation: "שם התואר והפועל חייבים להתאים לשם העצם במין (זכר/נקבה) ובמספר (יחיד/רבים). שימו לב למילים מבלבלות: מכנסיים, משקפיים ואופניים הם תמיד בזכר רבים! והמילה 'צומת' היא זכר יחיד!",
+                examples: [
+                    { right: "מכנסיים יפים ונוצצים", wrong: "מכנסיים יפה / יפות", note: "מכנסיים הם זכר רבים <- יפים!" },
+                    { right: "צומת מרכזי ומסוכן", wrong: "צומת מרכזית ומסוכנת", note: "צומת הוא זכר! אומרים צומת מסוכן." },
+                    { right: "משקפיים ורודים וחדשים", wrong: "משקפיים חדשות", note: "משקפיים הם זכר רבים <- חדשים!" },
+                    { right: "אופניים מהירים מאוד", wrong: "אופניים מהירות", note: "אופניים הם זכר רבים <- מהירים!" }
+                ],
+                questions: [
+                    {
+                        sentence: "כוכבת הלהקה לבשה להופעה מכנסיים ___.",
+                        options: ["לבנים ומבריקים", "לבנות ומבריקות", "לבן ומבריק"],
+                        correct: 0,
+                        hint: "המילה 'מכנסיים' היא בזכר רבים!",
+                        explain: "בינגו! 'מכנסיים' הם תמיד זכר רבים, ולכן אומרים: מכנסיים לבנים ומבריקים!"
+                    },
+                    {
+                        sentence: "אוטובוס הלהקה עצר ב___ מרכזי בעיר.",
+                        options: ["צומת מואר", "צומת מוארת"],
+                        correct: 0,
+                        hint: "המילה 'צומת' היא ממין זכר!",
+                        explain: "אלופים! המילה 'צומת' היא זכר, ולכן אומרים: צומת מואר (או צומת מסוכן)."
+                    },
+                    {
+                        sentence: "לציידת השדים יש משקפיים ___ שמזהים שגיאות!",
+                        options: ["מיוחדים", "מיוחדות", "מיוחדת"],
+                        correct: 0,
+                        hint: "משקפיים = זכר רבים!",
+                        explain: "פגיעה בול בקצב! 'משקפיים' הם זכר רבים, ולכן: משקפיים מיוחדים."
+                    },
+                    {
+                        sentence: "הרקדנים רכבו לקליפ על אופניים ___.",
+                        options: ["מהירות", "מהירים"],
+                        correct: 1,
+                        hint: "אופניים = זכר רבים!",
+                        explain: "מעולה! 'אופניים' הם זכר רבים, ולכן אומרים: אופניים מהירים."
+                    },
+                    {
+                        sentence: "על הבמה הוצבה תפאורה ___ ומרהיבה.",
+                        options: ["ענקית", "ענקי"],
+                        correct: 0,
+                        hint: "תפאורה היא נקבה יחידה",
+                        explain: "נכון מאוד! 'תפאורה' היא נקבה, ולכן התואר מתאים לה: תפאורה ענקית."
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "יידוע צירוף סמיכות",
+                rhyme: "שתי מילים צמודות שהולכות בחבורה – ה' הידיעה תופיע רק בשנייה! בית הספר, עורך הדין – זה הקצב הנכון להבין!",
+                explanation: "כששתי מילים מחוברות לצירוף אחד (סמיכות), אסור לשים ה' בהתחלה! מוסיפים את האות ה' רק למילה השנייה: אומרים 'בית הספר' (ולא הבית ספר), 'שיעורי הבית' (ולא השיעורי בית).",
+                examples: [
+                    { right: "בית הספר למוזיקה", wrong: "הבית ספר למוזיקה", note: "ה' הידיעה רק במילה השנייה!" },
+                    { right: "עורך הדין של הלהקה", wrong: "העורך דין של הלהקה", note: "אומרים: עורך הדין!" },
+                    { right: "שיעורי הבית בלשון", wrong: "השיעורי בית בלשון", note: "אומרים: שיעורי הבית!" },
+                    { right: "קופסת הצבעים הזוהרת", wrong: "הקופסת צבעים", note: "אומרים: קופסת הצבעים!" }
+                ],
+                questions: [
+                    {
+                        sentence: "להקת ה-K-Pop הגיעה להופיע ב___ שלנו!",
+                        options: ["בית הספר", "הבית ספר"],
+                        correct: 0,
+                        hint: "היכן מוסיפים את האות ה' בצירוף סמיכות?",
+                        explain: "הרמוניה מושלמת! בצירוף סמיכות ה' הידיעה באה רק במילה השנייה: בית הספר!"
+                    },
+                    {
+                        sentence: "סיימתי להכין את כל ___ לפני שיצאתי למופע.",
+                        options: ["השיעורי בית", "שיעורי הבית"],
+                        correct: 1,
+                        hint: "ה' הידיעה רק במילה השנייה!",
+                        explain: "בול על הביט! אומרים וכותבים 'שיעורי הבית' (ולא השיעורי בית)."
+                    },
+                    {
+                        sentence: "___ של הלהקה חתם על החוזה לסיבוב ההופעות.",
+                        options: ["עורך הדין", "העורך דין"],
+                        correct: 0,
+                        hint: "עורך + דין <- איפה שמים ה'?",
+                        explain: "טיהור מרהיב! אומרים 'עורך הדין' עם ה' רק במילה השנייה."
+                    },
+                    {
+                        sentence: "חגגנו את הניצחון עם ___ שהכנו יחד.",
+                        options: ["העוגת שוקולד", "עוגת השוקולד"],
+                        correct: 1,
+                        hint: "עוגת + שוקולד",
+                        explain: "אלופים! אומרים 'עוגת השוקולד' (ה' במילה השנייה בלבד)."
+                    },
+                    {
+                        sentence: "המעריצים חיכו בהתרגשות ב___ המרכזית.",
+                        options: ["תחנת האוטובוס", "התחנת אוטובוס"],
+                        correct: 0,
+                        hint: "תחנת + אוטובוס",
+                        explain: "שיר מושלם! אומרים 'תחנת האוטובוס' עם ה' במילה השנייה."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "מילות יחס והתאמת פועל",
+                rhyme: "הבטן היא נקבה – לכן כואבת לי הבטן! ואל חבר אני בא אליך – מוכנים למבחן!",
+                explanation: "מקפידים על שני דברים: 1. הפועל מתאים לנושא במשפט: הבטן היא נקבה ולכן 'כואבת לי הבטן' (ולא כואב). 2. אחרי פעלים של תנועה (באתי, הלכתי) אומרים 'אליך / אלייך / אליהם' ולא 'אצלך'!",
+                examples: [
+                    { right: "כואבת לי הבטן מרוב התרגשות", wrong: "כואב לי הבטן", note: "בטן היא נקבה <- כואבת!" },
+                    { right: "באתי אליך לחזרה על השיר", wrong: "באתי אצלך לחזרה", note: "אומרים: באתי אליך!" },
+                    { right: "נפלה לי הגיטרה מהיד", wrong: "נפל לי הגיטרה", note: "גיטרה היא נקבה <- נפלה!" },
+                    { right: "התגעגעתי אליכם מאוד!", wrong: "התגעגעתי לכם", note: "מתגעגעים אל מישהו -> אליכם!" }
+                ],
+                questions: [
+                    {
+                        sentence: "מרוב צחוק והתרגשות לפני המופע, ___ לי הבטן!",
+                        options: ["כואבת", "כואב"],
+                        correct: 0,
+                        hint: "המילה 'בטן' היא ממין נקבה!",
+                        explain: "הרמוניה מעולה! 'בטן' היא נקבה, ולכן אומרים: כואבת לי הבטן!"
+                    },
+                    {
+                        sentence: "היי! אחרי הלימודים באתי ___ כדי להתאמן על הריקוד.",
+                        options: ["אצלך", "אליך"],
+                        correct: 1,
+                        hint: "באים אל מישהו...",
+                        explain: "מדויק! אחרי פועל תנועה כמו 'באתי' אומרים: באתי אליך (ולא אצלך)."
+                    },
+                    {
+                        sentence: "אוי, באמצע השיר ___ לי העיפרון מהשולחן.",
+                        options: ["נפל", "נפלה"],
+                        correct: 0,
+                        hint: "עיפרון הוא זכר!",
+                        explain: "יופי של קצב! 'עיפרון' הוא זכר, ולכן אומרים: נפל לי העיפרון."
+                    },
+                    {
+                        sentence: "קהל יקר, התגעגענו ___ כל כך בזמן החופשה!",
+                        options: ["לכם", "אליכם"],
+                        correct: 1,
+                        hint: "מתגעגעים אל...",
+                        explain: "כוכבי על! אומרים 'התגעגענו אליכם' (עם מילת היחס אל)."
+                    },
+                    {
+                        sentence: "אחרי ששרנו שעה שלמה, קצת ___ לי הגרון.",
+                        options: ["כואב", "כואבת"],
+                        correct: 0,
+                        hint: "גרון הוא ממין זכר!",
+                        explain: "טיהור מושלם! 'גרון' הוא זכר, ולכן אומרים: כואב לי הגרון."
+                    }
+                ]
+            }
+        ];
+
+        /* =========================================================================
+           3. ניהול מצב המשחק (State)
+           ========================================================================= */
+        let currentStageIdx = 0;
+        let currentQuestions = [];
+        let currentQuestionIdx = 0;
+        let totalPurified = 0;
+        let currentStreak = 0;
+        let completedStages = new Set();
+        let stageResults = []; // 'purified', 'pending'
+        let isAttacking = false;
+
+        function updateScoreboard() {
+            document.getElementById('score-display').textContent = totalPurified;
+            document.getElementById('streak-display').textContent = currentStreak;
+            document.getElementById('medals-display').textContent = `${completedStages.size}/4`;
+
+            for (let i = 0; i < 4; i++) {
+                const badge = document.getElementById(`badge-stage-${i}`);
+                if (completedStages.has(i)) {
+                    badge.classList.remove('hidden');
+                }
+            }
+        }
+
+        function switchScreen(screenId) {
+            ['screen-menu', 'screen-briefing', 'screen-game', 'screen-celebration'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        function showMainMenu() {
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            updateScoreboard();
+            switchScreen('screen-menu');
+        }
+
+        /* =========================================================================
+           4. התחלת שלב ותדריך המנטורית בחדר החזרות
+           ========================================================================= */
+        function startStage(stageIndex) {
+            playStageChime();
+            currentStageIdx = stageIndex;
+
+            if (stageIndex === 4) {
+                // קרב הבוס הגדול - שאלות מכל 4 הכללים של סעיף 2
+                const mixedQuestions = [];
+                STAGES_DATA.forEach(s => {
+                    s.questions.forEach(q => mixedQuestions.push(q));
+                });
+                currentQuestions = mixedQuestions.sort(() => Math.random() - 0.5).slice(0, 6);
+
+                document.getElementById('briefing-stage-tag').textContent = '👑 המופע המרכזי – קרב הבוס!';
+                document.getElementById('briefing-title').textContent = 'כל חוקי הדקדוק וההתאמה יחד!';
+                document.getElementById('briefing-rhyme').textContent = 'שלושה בנים ושלוש בנות, מכנסיים יפים ובית הספר בלי טעויות, כואבת הבטן ובאתי אליך – ציידות ה-K-Pop מנצחות בחיוך!';
+                document.getElementById('briefing-explanation').textContent = 'הגעתם לבמה המרכזית! מלך שדי הבלבול מערבב את כל ארבעת החוקים שלמדנו. השתמשו בחרוזי הקצב וטהרו את הבמה!';
+
+                const exContainer = document.getElementById('briefing-examples');
+                exContainer.innerHTML = STAGES_DATA.map(s => `
+                    <div class="bg-purple-950/80 border-2 border-pink-400/50 rounded-xl p-3 text-right">
+                        <div class="font-black text-cyan-300 text-sm mb-1">🎤 ${s.title}</div>
+                        <div class="text-xs text-purple-100 font-semibold">${s.rhyme}</div>
+                    </div>
+                `).join('');
+
+                switchScreen('screen-briefing');
+                return;
+            }
+
+            const stage = STAGES_DATA[stageIndex];
+            currentQuestions = [...stage.questions];
+
+            document.getElementById('briefing-stage-tag').textContent = `חדר החזרות – שיר ${stageIndex + 1}`;
+            document.getElementById('briefing-title').textContent = stage.title;
+            document.getElementById('briefing-rhyme').textContent = stage.rhyme;
+            document.getElementById('briefing-explanation').textContent = stage.explanation;
+
+            const exContainer = document.getElementById('briefing-examples');
+            exContainer.innerHTML = stage.examples.map(ex => `
+                <div class="bg-slate-900/90 border-2 border-purple-500/40 rounded-2xl p-3.5 text-right flex flex-col justify-between shadow-md">
+                    <div class="flex items-center gap-2 text-cyan-300 font-black text-base mb-1">
+                        <span>✅</span>
+                        <span>${ex.right}</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-rose-400 line-through text-xs font-semibold mb-2">
+                        <span>👾</span>
+                        <span>${ex.wrong}</span>
+                    </div>
+                    <div class="text-xs bg-pink-500/20 text-pink-200 border border-pink-400/30 font-bold px-2.5 py-1 rounded-lg">
+                        💡 ${ex.note}
+                    </div>
+                </div>
+            `).join('');
+
+            switchScreen('screen-briefing');
+        }
+
+        function readCurrentBriefing() {
+            const title = document.getElementById('briefing-title').textContent;
+            const rhyme = document.getElementById('briefing-rhyme').textContent;
+            const exp = document.getElementById('briefing-explanation').textContent;
+            speakHebrew(`${title}. חרוז הקצב: ${rhyme}. ${exp}`);
+        }
+
+        /* =========================================================================
+           5. קרב הבמה ושיגור קרני הרמוניה
+           ========================================================================= */
+        function launchStageBattle() {
+            playStageChime();
+            currentQuestionIdx = 0;
+            stageResults = new Array(currentQuestions.length).fill('pending');
+
+            const stageName = currentStageIdx === 4 ? '👑 קרב הבוס הגדול' : `שיר ${currentStageIdx + 1}: ${STAGES_DATA[currentStageIdx].title}`;
+            document.getElementById('game-stage-title').textContent = stageName;
+
+            const reminderText = currentStageIdx === 4
+                ? 'זכר עם ה׳ (שלושה) | מכנסיים יפים, צומת מסוכן | בית הספר (ה׳ בשנייה) | כואבת הבטן, באתי אליך'
+                : STAGES_DATA[currentStageIdx].rhyme;
+            document.getElementById('reminder-rhyme-text').textContent = `🎵 ${reminderText}`;
+            document.getElementById('rule-reminder-popup').classList.add('hidden');
+
+            switchScreen('screen-game');
+            renderCurrentQuestion();
+        }
+
+        function toggleRuleReminder() {
+            const popup = document.getElementById('rule-reminder-popup');
+            popup.classList.toggle('hidden');
+            if (!popup.classList.contains('hidden')) {
+                speakHebrew(document.getElementById('reminder-rhyme-text').textContent);
+            }
+        }
+
+        function renderLightstickDots() {
+            const container = document.getElementById('lightstick-dots');
+            container.innerHTML = stageResults.map((status, idx) => {
+                let bg = 'bg-slate-800 border-purple-400';
+                let icon = '⚪';
+                if (status === 'purified') {
+                    bg = 'bg-pink-500 border-cyan-300 shadow-[0_0_8px_#ec4899]';
+                    icon = '🌟';
+                } else if (idx === currentQuestionIdx) {
+                    bg = 'bg-cyan-400 border-white animate-pulse';
+                    icon = '🪄';
+                }
+                return `<span class="w-6 h-6 rounded-full border-2 ${bg} flex items-center justify-center text-xs">${icon}</span>`;
+            }).join('');
+        }
+
+        function renderCurrentQuestion() {
+            isAttacking = false;
+            const q = currentQuestions[currentQuestionIdx];
+
+            document.getElementById('question-counter').textContent = `קרב ${currentQuestionIdx + 1} מתוך ${currentQuestions.length}`;
+            renderLightstickDots();
+
+            // איפוס שד הבלבול וקרן הקסם
+            const demon = document.getElementById('demon-avatar');
+            demon.className = 'float-anim text-5xl md:text-6xl select-none filter drop-shadow-[0_0_15px_rgba(236,72,153,0.8)]';
+            demon.textContent = DEMON_AVATARS[currentQuestionIdx % DEMON_AVATARS.length];
+            document.getElementById('demon-name-tag').textContent = '👾 שד הבלבול מזייף על הבמה!';
+            document.getElementById('demon-name-tag').className = 'text-xs font-black bg-rose-600/90 text-white px-3 py-0.5 rounded-full border border-rose-300 mb-1 shadow';
+
+            const beam = document.getElementById('magic-beam');
+            beam.classList.remove('beam-shoot');
+
+            // הצגת המשפט להשלמה
+            const formattedSentence = q.sentence.replace('___', '<span class="inline-block bg-pink-500/30 text-cyan-300 px-3 py-0.5 rounded-xl border-2 border-dashed border-cyan-400 mx-1">?</span>');
+            document.getElementById('question-sentence').innerHTML = formattedSentence;
+            document.getElementById('question-hint-sub').textContent = `רמז מהמנטורית: ${q.hint}`;
+
+            // יצירת כפתורי שערי הקצב
+            const targetsContainer = document.getElementById('targets-container');
+            const gridCols = q.options.length === 2 ? 'grid-cols-1 sm:grid-cols-2 max-w-xl mx-auto' : 'grid-cols-1 sm:grid-cols-3';
+            targetsContainer.className = `w-full grid ${gridCols} gap-3 md:gap-4 z-20 my-auto`;
+
+            targetsContainer.innerHTML = q.options.map((opt, idx) => `
+                <button onclick="fireHarmonyBeam(${idx})" class="btn-portal bg-gradient-to-r from-pink-500 via-fuchsia-600 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-black text-xl md:text-2xl py-3.5 px-4 rounded-2xl border-2 border-cyan-300 flex flex-col items-center justify-center gap-1">
+                    <span class="text-xs font-bold text-cyan-200 bg-slate-950/60 px-2.5 py-0.5 rounded-full">🪄 שגרו קרן קצב</span>
+                    <span>${opt}</span>
+                </button>
+            `).join('');
+        }
+
+        function speakCurrentQuestion() {
+            const q = currentQuestions[currentQuestionIdx];
+            const spoken = q.sentence.replace('___', 'השלימו:');
+            speakHebrew(`${spoken}. האפשרויות הן: ${q.options.join(', או ')}`);
+        }
+
+        // שיגור קרן קצב לעבר שד הבלבול
+        function fireHarmonyBeam(chosenIdx) {
+            if (isAttacking) return;
+            isAttacking = true;
+            playLaserBeamSound();
+
+            const q = currentQuestions[currentQuestionIdx];
+            const isCorrect = (chosenIdx === q.correct);
+            const beam = document.getElementById('magic-beam');
+            const demon = document.getElementById('demon-avatar');
+            const demonTag = document.getElementById('demon-name-tag');
+
+            beam.classList.add('beam-shoot');
+
+            if (isCorrect) {
+                setTimeout(() => {
+                    demon.classList.remove('float-anim');
+                    demon.classList.add('purify-hit');
+                    demon.textContent = '✨🎵💖';
+                    demonTag.textContent = '✨ השד טוהר להרמוניה!';
+                    demonTag.className = 'text-xs font-black bg-emerald-500 text-slate-950 px-3 py-0.5 rounded-full mb-1 shadow';
+                }, 220);
+            } else {
+                setTimeout(() => {
+                    demon.textContent = '🛡️👾';
+                }, 220);
+            }
+
+            setTimeout(() => {
+                showBattleFeedback(isCorrect, q);
+            }, 560);
+        }
+
+        function showBattleFeedback(isCorrect, q) {
+            const overlay = document.getElementById('feedback-overlay');
+            const emoji = document.getElementById('feedback-emoji');
+            const title = document.getElementById('feedback-title');
+            const explain = document.getElementById('feedback-explanation');
+            const nextBtn = document.getElementById('feedback-next-btn');
+
+            overlay.classList.remove('hidden');
+
+            if (isCorrect) {
+                playHarmonyFanfare();
+                launchConfetti(65);
+                totalPurified++;
+                currentStreak++;
+                stageResults[currentQuestionIdx] = 'purified';
+                updateScoreboard();
+                renderLightstickDots();
+
+                const cheers = ["הרמוניה מושלמת!", "שד הבלבול טוהר!", "וואו! ביצוע של כוכבות!", "קצב אש! עברית מושלמת!"];
+                const randomCheer = cheers[Math.floor(Math.random() * cheers.length)];
+
+                emoji.textContent = '🌟🎤✨';
+                title.textContent = randomCheer;
+                title.className = 'text-3xl md:text-4xl font-black text-cyan-300 mb-2';
+
+                const fullCorrectSentence = q.sentence.replace('___', `<u class="text-pink-400 font-black">${q.options[q.correct]}</u>`);
+                explain.innerHTML = `<div class="text-xl text-white mb-2">"${fullCorrectSentence}"</div><div>${q.explain}</div>`;
+                nextBtn.textContent = (currentQuestionIdx < currentQuestions.length - 1) ? 'לשד הבא על הבמה! 🎤⬅️' : 'לסיום השיר וקבלת כוכב איידול! 🌟';
+                nextBtn.onclick = () => nextBattleStep(true);
+
+                speakHebrew(`${randomCheer}. ${q.explain}`);
+            } else {
+                playShieldBlockSound();
+                currentStreak = 0;
+                updateScoreboard();
+
+                emoji.textContent = '🛡️👾';
+                title.textContent = 'שד הבלבול חסם! נסו שוב!';
+                title.className = 'text-2xl md:text-3xl font-black text-pink-400 mb-2';
+
+                const stageRhyme = currentStageIdx === 4 ? '' : `<div class="mt-2 text-sm bg-purple-950 text-cyan-200 p-2.5 rounded-xl border border-cyan-400/40">🎵 זכרו: ${STAGES_DATA[currentStageIdx].rhyme}</div>`;
+                explain.innerHTML = `<div>לא מוותרות! ציידות ה-K-Pop מנסות שוב.</div><div class="text-cyan-300 mt-1">רמז: ${q.hint}</div>${stageRhyme}`;
+                nextBtn.textContent = 'שיגור חוזר! נסו שוב 🔄🪄';
+                nextBtn.onclick = () => nextBattleStep(false);
+
+                speakHebrew(`שד הבלבול חסם! הנה רמז: ${q.hint}. נסו שוב!`);
+            }
+        }
+
+        function nextBattleStep(advanceToNext) {
+            document.getElementById('feedback-overlay').classList.add('hidden');
+            if (advanceToNext) {
+                currentQuestionIdx++;
+                if (currentQuestionIdx >= currentQuestions.length) {
+                    finishStageCelebration();
+                } else {
+                    renderCurrentQuestion();
+                }
+            } else {
+                renderCurrentQuestion();
+            }
+        }
+
+        /* =========================================================================
+           6. חגיגת סיום שיר וזכייה בכתר ה-K-Pop
+           ========================================================================= */
+        function finishStageCelebration() {
+            playHarmonyFanfare();
+            launchConfetti(150);
+
+            if (currentStageIdx < 4) {
+                completedStages.add(currentStageIdx);
+            }
+            updateScoreboard();
+
+            const titleEl = document.getElementById('celeb-title');
+            const subEl = document.getElementById('celeb-subtitle');
+            const rhymeEl = document.getElementById('celeb-rhyme');
+            const trophyEl = document.getElementById('celeb-trophy');
+            const nextBtn = document.getElementById('celeb-next-stage-btn');
+
+            if (currentStageIdx === 4 || completedStages.size === 4) {
+                trophyEl.textContent = '👑👩‍🎤💖';
+                titleEl.textContent = 'מלכות ה-K-Pop של השפה העברית!';
+                subEl.textContent = `טיהרתם כבר ${totalPurified} שדי בלבול ואתם שולטים בכל כללי הדקדוק וההתאמה הלשונית!`;
+                rhymeEl.textContent = 'שלושה בנים ושלוש בנות | מכנסיים יפים וצומת מסוכן | בית הספר | כואבת הבטן ובאתי אליך!';
+                nextBtn.textContent = 'הופעה חוזרת במופע המרכזי! 👑';
+                nextBtn.onclick = () => startStage(4);
+            } else {
+                const st = STAGES_DATA[currentStageIdx];
+                trophyEl.textContent = '🌟🎤🎉';
+                titleEl.textContent = `כוכב איידול ב${st.title}!`;
+                subEl.textContent = `טיהרתם את כל שדי הבלבול בשיר ${currentStageIdx + 1}! נשארו עוד ${4 - completedStages.size} כוכבים לכתר האליפות!`;
+                rhymeEl.textContent = st.rhyme;
+                nextBtn.textContent = `המשיכו לשיר ${currentStageIdx + 2}! 🎤⬅️`;
+                nextBtn.onclick = () => goToNextStage();
+            }
+
+            switchScreen('screen-celebration');
+            speakHebrew(`${titleEl.textContent}. ${subEl.textContent}`);
+        }
+
+        function goToNextStage() {
+            if (currentStageIdx < 3) {
+                startStage(currentStageIdx + 1);
+            } else {
+                startStage(4);
+            }
+        }
+
+        /* =========================================================================
+           7. מנוע קונפטי ונצנצי K-Pop על גבי Canvas
+           ========================================================================= */
+        const confettiCanvas = document.getElementById('confetti-canvas');
+        const cCtx = confettiCanvas.getContext('2d');
+        let confettiParticles = [];
+        let confettiAnimId = null;
+
+        function resizeConfettiCanvas() {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeConfettiCanvas);
+        resizeConfettiCanvas();
+
+        function launchConfetti(count = 80) {
+            const colors = ['#ec4899', '#22d3ee', '#a855f7', '#facc15', '#f472b6', '#ffffff'];
+            for (let i = 0; i < count; i++) {
+                confettiParticles.push({
+                    x: window.innerWidth / 2 + (Math.random() - 0.5) * 280,
+                    y: window.innerHeight * 0.45,
+                    vx: (Math.random() - 0.5) * 16,
+                    vy: -(Math.random() * 14 + 5),
+                    size: Math.random() * 9 + 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rotation: Math.random() * 360,
+                    vRot: (Math.random() - 0.5) * 12,
+                    alpha: 1
+                });
+            }
+            if (!confettiAnimId) {
+                animateConfetti();
+            }
+        }
+
+        function animateConfetti() {
+            cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            confettiParticles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.36;
+                p.rotation += p.vRot;
+                p.alpha -= 0.008;
+
+                cCtx.save();
+                cCtx.globalAlpha = Math.max(0, p.alpha);
+                cCtx.translate(p.x, p.y);
+                cCtx.rotate((p.rotation * Math.PI) / 180);
+                cCtx.fillStyle = p.color;
+                cCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+                cCtx.restore();
+            });
+
+            confettiParticles = confettiParticles.filter(p => p.alpha > 0 && p.y < confettiCanvas.height + 30);
+
+            if (confettiParticles.length > 0) {
+                confettiAnimId = requestAnimationFrame(animateConfetti);
+            } else {
+                confettiAnimId = null;
+                cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            }
+        }
+    </script>
+</body>
+</html>
